@@ -6,17 +6,17 @@ stages:
 build:
   stage: build
   script:
-    - cd ./src/C3_SimpleBashUtils-3-develop/src/cat/
+    - cd ./cat/
     - make
     - cd ../grep/
     - make
   after_script:
-     - chmod a+x ./src/notifyer.sh
-     - ./src/notifyer.sh CI "$CI_JOB_STATUS" "$CI_COMMIT_AUTHOR" "$CI_COMMIT_BRANCH" "$CI_COMMIT_MESSAGE" "$CI_PIPELINE_ID" "$CI_JOB_STAGE" 
+     - chmod a+x notifyer.sh
+     - ./notifyer.sh CI "$CI_JOB_STATUS" "$CI_COMMIT_AUTHOR" "$CI_COMMIT_BRANCH" "$CI_COMMIT_MESSAGE" "$CI_PIPELINE_ID" "$CI_JOB_STAGE" 
   artifacts:
     paths:
-      - ./src/C3_SimpleBashUtils-3-develop/src/cat/s21_cat
-      - ./src/C3_SimpleBashUtils-3-develop/src/grep/s21_grep
+      - ./cat/s21_cat
+      - ./grep/s21_grep
     expire_in: 30 days
   tags: 
     - ajhin2 
@@ -24,13 +24,13 @@ build:
 style:
   stage: style
   script:
-    - cd ./src/C3_SimpleBashUtils-3-develop/src/cat/
+    - cd ./cat/
     - make linter
     - cd ../grep/
     - make linter   
   after_script:
-    - chmod a+x ./src/notifyer.sh
-    - ./src/notifyer.sh CI "$CI_JOB_STATUS" "$CI_COMMIT_AUTHOR" "$CI_COMMIT_BRANCH" "$CI_COMMIT_MESSAGE" "$CI_PIPELINE_ID" "$CI_JOB_STAGE"
+    - chmod a+x notifyer.sh
+    - ./notifyer.sh CI "$CI_JOB_STATUS" "$CI_COMMIT_AUTHOR" "$CI_COMMIT_BRANCH" "$CI_COMMIT_MESSAGE" "$CI_PIPELINE_ID" "$CI_JOB_STAGE"
   needs: 
     - job: build
   tags:
@@ -43,15 +43,13 @@ tests:
       artifacts: true
     - job: style
   script:
-    - cd ./src/C3_SimpleBashUtils-3-develop/src/cat/tests/1
-    - chmod +x ./s21_cat_lin_test1.sh 
-    - ./s21_cat_lin_test1.sh 
-    - cd ./../../../grep/tests/1
-    - chmod +x ./s21_grep_lin_test1.sh 
-    - ./s21_grep_lin_test1.sh 
+    - chmod +x ./cat/tests/s21_cat_lin_test1.sh 
+    - ./cat/tests/s21_cat_lin_test1.sh 
+    - chmod +x ./grep/tests/s21_grep_lin_test1.sh 
+    - ./grep/tests/s21_grep_lin_test1.sh 
   after_script:
-    - chmod a+x ./src/notifyer.sh
-    - ./src/notifyer.sh CI "$CI_JOB_STATUS" "$CI_COMMIT_AUTHOR" "$CI_COMMIT_BRANCH" "$CI_COMMIT_MESSAGE" "$CI_PIPELINE_ID" "$CI_JOB_STAGE"
+    - chmod a+x notifyer.sh
+    - ./notifyer.sh CI "$CI_JOB_STATUS" "$CI_COMMIT_AUTHOR" "$CI_COMMIT_BRANCH" "$CI_COMMIT_MESSAGE" "$CI_PIPELINE_ID" "$CI_JOB_STAGE"
   tags:
     - ajhin2
   allow_failure: false    
@@ -63,11 +61,11 @@ deploy:
     - job: style
     - job: tests
   script:
-    - chmod a+x ./src/deployer.sh
-    - ./src/deployer.sh 10.54.202.246 student
+    - chmod a+x deployer.sh
+    - ./deployer.sh 10.54.202.246 student
   after_script:
-    - chmod a+x ./src/notifyer.sh
-    - ./src/notifyer.sh CD "$CI_JOB_STATUS" "$CI_COMMIT_AUTHOR" "$CI_COMMIT_BRANCH" "$CI_COMMIT_MESSAGE" "$CI_PIPELINE_ID" "$CI_JOB_STAGE"
+    - chmod a+x notifyer.sh
+    - ./notifyer.sh CD "$CI_JOB_STATUS" "$CI_COMMIT_AUTHOR" "$CI_COMMIT_BRANCH" "$CI_COMMIT_MESSAGE" "$CI_PIPELINE_ID" "$CI_JOB_STAGE"
   tags:
     - ajhin2
   allow_failure: false 
