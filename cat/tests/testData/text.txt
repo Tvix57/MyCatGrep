@@ -1,0 +1,28 @@
+1
+Hello, this is a \n   TEST file!
+
+
+    make this test (TEST) 
+
+12345
+
+good file
+Happy New Year
+
+test file
+happy new year 
+GOOD news
+    4   2
+happy
+new
+HAPPY
+NEW|YEAR
+Text
+YEAR
+YEAR
+YEAR
+YEAR
+EAR
+new
+NEW
+0
